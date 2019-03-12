@@ -10,20 +10,22 @@ class consts():
     flyingdino = 500
     
 class Coordinates():
-    replayBtn = (340, 416)
     dinosaur = (190, 441)
-    flyingdino = (290,413,298,426)
-    gameover = (245, 369, 437, 381)
-    g = (245,369,257,381)
-    e = (317,369,329,381)
-    o = (354,369,366,381)
-    r = (425,369,437,381)
+    d = dinosaur
+    replayBtn = (d[0]+150,d[1]-25)
+    flyingdino = (d[0]+100,d[1]-28,d[0]+108,d[0]-15)
+    gameover = (d[0]+55, d[1]-72, d[0]+247, d[1]-60)
+    g = (d[0]+55,d[1]-72,d[0]+67,d[1]-60)
+    e = (d[0]+127,d[1]-72,d[0]+139,d[1]-60)
+    o = (d[0]+164,d[1]-72,d[0]+176,d[1]-60)
+    r = (d[0]+235,d[1]-72,d[0]+247,d[1]-60)
     c1 = [60, 60, 60]
     c2 = [0, 0, 0]
     c3 = [90, 120, 150]
     c4 = [5, 5, 5]
 class times():
-    jumplen = [0.17, 0.16, 0.10]
+    jumplen = [0.17, 0.16, 0.8]
+    timepassed = [10.0, 40.0, 1000.0]
 
 def restartGame():
     pyautogui.click(Coordinates.replayBtn)
@@ -75,12 +77,11 @@ def main():
     restartGame()
     while(True):    
         timelen = time.clock() - start
-        if(timelen<10.0):
-            ind = 0
-        elif(timelen<40.0):
-            ind = 1
-        elif(timelen<1000.0):
-            ind = 2
+        for i,t in enumerate(times.timepassed):
+            if(timelen<t):
+                ind = i
+                break
+        print(ind, " <==========")
             
         if(#imageGrabGameOver(Coordinates.gameover)==consts.gameoverCNT or
             imageGrabGameOver(Coordinates.g)==consts.gameoverCNTLet or
@@ -94,9 +95,11 @@ def main():
             pic = pyautogui.screenshot()
             r = random.randint(100000, 999999)
             pic.save('screenshot'+str(r)+'.png')
+
             cnt += 1
             if(cnt == 10):
                 break
+                
             restartGame()
             start = time.clock()
             continue
