@@ -2,9 +2,9 @@ from PIL import ImageGrab, ImageOps, Image
 import pyautogui
 import time
 import numpy as np
+from ctypes import windll
 from numpy import *
 class consts():
-    obstacles = [447, 447, 447, 447, 447]
     gameoverCNT = 2634
     gameoverCNTLet = 474
     flyingdino = 447
@@ -19,25 +19,29 @@ class Coordinates():
     d = dinosaur
     replayBtn = (d[0]+150,d[1]-25)
     flyingdino = addtoCoordinate(d, 60, -10, 100, -5)
-    gameover = addtoCoordinate(d, 73, -55, 247, -60) #(d[0]+55, d[1]-72, d[0]+247, d[1]-60)
-    g = addtoCoordinate(d, 73, -55, 84, -43) #(d[0]+55,d[1]-72,d[0]+67,d[1]-60) 
-    e = addtoCoordinate(d, 144, -55, 155, -43) #(d[0]+127,d[1]-72,d[0]+139,d[1]-60)
-    o = addtoCoordinate(d, 180, -55, 191, -43) #(d[0]+164,d[1]-72,d[0]+176,d[1]-60)
-    r = addtoCoordinate(d, 252, -55, 264, -43) #(d[0]+235,d[1]-72,d[0]+247,d[1]-60)
-    c1 = [60, 80, 85, 90, 90]
-    c2 = [20, 20, 20, 20, 20]
-    c3 = [100, 120, 125, 130, 130]
-    c4 = [25, 25, 25, 25, 25]
+    g = addtoCoordinate(d, 73, -55, 84, -43)
+    c1 = [15, 15, 15, 15, 15, 15, 15]
+    c2 = [0, 0, 0, 0, 0, 0, 0]
+    c3 = [100, 120, 120, 130, 130, 170, 210]
+    c4 = [25, 25, 25, 25, 25, 25, 25]
+    
 class times():
-    jumplen = [0.18, 0.18, 0.18, 0.17, 0.17]
-    timepassed = [10.0, 20.0, 30.0, 40.0, 1000.0]
+    jumplen = [0.18, 0.18, 0.18, 0.17, 0.17, 0.17, 0.17]
+    timepassed = [10.0, 20.0, 30.0, 40.0, 70.0, 85.0, 1000.0]
 
 def restartGame():
     pyautogui.click(Coordinates.replayBtn)
 
 def press(st,ind):
     pyautogui.keyDown(st)
-    time.sleep(times.jumplen[ind])
+    if(st == 'space'):
+        time.sleep(times.jumplen[ind])
+    else:
+        twodino = Coordinates.d + Coordinates.d
+        head = addtoCoordinate(twodino,-50,0,135,1)
+        #print(head)
+        while(imageGrabRect(head)):
+            continue
     pyautogui.keyUp(st)
     
 def imageGrab(ind, box=True):
@@ -57,24 +61,48 @@ def imageGrabRect(box):
     
     arr = np.array(image)
     sh = arr.shape
-    width, height = sh[0], sh[1]
+    #height, width  = sh[0], sh[1]
 
     #if(a.sum()!=447):
     #    print(arr)
+
     flag = 1
+    obs = 0
+    count = 0
+    fi = None
+    la = None
     for x in arr:
+        la = None
         for y in x:
-            if(y[0]==83 and y[1]==83 and y[2]==83 and flag==1):
+            if(y[0]<90 and y[1]<90 and y[2]<90):
+                if(count == 0):
+                    fi = True
+                la = True
+                obs += 1
                 flag = 0
-                break
-                #print("Obstacle!!!")
-                #global po
-                #print(y,po)
-                #po += 1
+        count += 1
+    '''
+    print("----------")
+    print(fi)
+    print(la)
+
+    print("====")
+    uuuu = input()
+    '''
+
+    if(flag == 1):
+        return False
                 
+    if(sh[0] == 25):
+        
+        if(la == True):
+            return 1
+
+        if(fi == True):
+            return 2
+            
+        return 0
                 
-    #print(np.array(grayImage))
-    #pp = input()
     return (flag == 0)
     
 def main():
@@ -93,16 +121,12 @@ def main():
     last = None
     while(True):
         if(last!=pyautogui.position()):
-            #print(imageGrabGameOver(Coordinates.gameover),
-            #    imageGrabGameOver(Coordinates.g),
-            #    imageGrabGameOver(Coordinates.e),
-            #    imageGrabGameOver(Coordinates.o),
-            #    imageGrabGameOver(Coordinates.r))
             print(pyautogui.position())
         last=pyautogui.position()
     '''
 
-
+    a=0
+    b=0
     start = time.clock()
     end = None
     cnt = 0
@@ -133,12 +157,15 @@ def main():
             restartGame()
             start = time.clock()
             continue
+            
+        #print(a-b)
         #a = time.time()
         res = imageGrab(ind)
         #b = time.time()
         #print(b-a)
-        if(res == True):
+        if(res == 1):
             press('space', ind)
-        elif(imageGrabRect(Coordinates.flyingdino)==True):
+        elif(res == 2):
+            #print(res)
             press('down', ind)
 main()
