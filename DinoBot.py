@@ -4,12 +4,6 @@ import time
 import numpy as np
 from ctypes import windll
 from numpy import *
-class consts():
-    gameoverCNT = 2634
-    gameoverCNTLet = 474
-    flyingdino = 447
-
-po = 1
 
 def addtoCoordinate(c, x, y, z, k):
     return (c[0]+x,c[1]+y,c[0]+z,c[1]+k)
@@ -39,7 +33,6 @@ def press(st,ind):
     else:
         twodino = Coordinates.d + Coordinates.d
         head = addtoCoordinate(twodino,-50,0,135,1)
-        #print(head)
         while(imageGrabRect(head)):
             continue
     pyautogui.keyUp(st)
@@ -61,13 +54,8 @@ def imageGrabRect(box):
     
     arr = np.array(image)
     sh = arr.shape
-    #height, width  = sh[0], sh[1]
-
-    #if(a.sum()!=447):
-    #    print(arr)
-
+    
     flag = 1
-    obs = 0
     count = 0
     fi = None
     la = None
@@ -78,17 +66,8 @@ def imageGrabRect(box):
                 if(count == 0):
                     fi = True
                 la = True
-                obs += 1
                 flag = 0
         count += 1
-    '''
-    print("----------")
-    print(fi)
-    print(la)
-
-    print("====")
-    uuuu = input()
-    '''
 
     if(flag == 1):
         return False
@@ -106,17 +85,6 @@ def imageGrabRect(box):
     return (flag == 0)
     
 def main():
-    '''
-    while(True):
-        print(imageGrab(0))
-        print(imageGrab(1))
-        print(imageGrab(2))
-        print(imageGrab(3))
-        u = input()
-    '''
-
-    #print(imageGrabRect(addtoCoordinate(Coordinates.d,60,-5,100,0)))
-    
     '''
     last = None
     while(True):
@@ -138,9 +106,6 @@ def main():
                 ind = i
                 break
 
-        #print(Coordinates.g)
-        #print(Coordinates.gameover," <==")
-            
         if(imageGrabRect(Coordinates.g)==True):
             
             end = time.clock()    
@@ -149,10 +114,6 @@ def main():
             pic = pyautogui.screenshot()
             #r = random.randint(100000, 999999)
             #pic.save('screenshot'+str(r)+'.png')
-
-            #cnt += 1
-            #if(cnt == 100):
-            #    break
                 
             restartGame()
             start = time.clock()
@@ -166,6 +127,5 @@ def main():
         if(res == 1):
             press('space', ind)
         elif(res == 2):
-            #print(res)
             press('down', ind)
 main()
