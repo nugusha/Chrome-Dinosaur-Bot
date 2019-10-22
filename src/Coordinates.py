@@ -2,11 +2,11 @@ def addtoCoordinate(c, x, y, z, k):
     return (c[0]+x,c[1]+y,c[0]+z,c[1]+k)
     
 class Coordinates():
-    dinosaur = (160, 423)
+    dinosaur = (172, 424)
     d = dinosaur
     replayBtn = (d[0]+180,d[1])
     flyingdino = addtoCoordinate(d, 60, -10, 100, -5)
-    g = addtoCoordinate(d, 85, -55, 98, -43)
+    g = addtoCoordinate(d, 73, -55, 86, -43)
     c1 = 15
     c2 = 0
     #c3 = [100, 120, 120, 130, 130, 170, 210, 350]
