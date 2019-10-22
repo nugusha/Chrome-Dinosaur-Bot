@@ -23,21 +23,18 @@ def press(st,ind):
             continue
     pyautogui.keyUp(st)
     
-def imageGrab(ind, box=True, start = 0.0):
-    if(box==True):
-        X = Coordinates.dinosaur[0]
-        Y = Coordinates.dinosaur[1]
-        cc1 = Coordinates.c1
-        cc2 = Coordinates.c2
-        XX = (time.clock() - start)
-        cc3 = 1.1*XX + 110 # Coordinates.c3[ind]
-        if(XX>60.0):
-            #cc3 += 0.026*(XX-60)**(1.8)
-            cc3 += 0.002*(XX-60)**(2.5)
-        cc4 = Coordinates.c4
-        box = (X+cc1, Y+cc2, 
-            X+cc3, Y+cc4)
-        return imageGrabRect(box)
+def imageGrab(start = 0.0):
+    X = Coordinates.dinosaur[0]
+    Y = Coordinates.dinosaur[1]
+    cc1 = Coordinates.c1
+    cc2 = Coordinates.c2
+    XX = (time.clock() - start)
+    cc3 = 1.1*XX + 110 # Coordinates.c3[ind]
+    if(XX>60.0):
+        cc3 += 0.002*(XX-60)**(2.5)
+    cc4 = Coordinates.c4
+    box = (X+cc1, Y+cc2, X+cc3, Y+cc4)
+    return imageGrabRect(box)
 
 def imageGrabRect(box, gameover = False):
     image = ImageGrab.grab(box)
@@ -50,36 +47,47 @@ def imageGrabRect(box, gameover = False):
     fi = None
     la = None
     blackpixel = 0
+    firstPixel = -1
+    #if(gameover == False):
+    #    print(box, arr.shape, " <==== ")
     for x in arr:
         la = None
-        for y in x:
+        for j, y in enumerate(x):
             if(y[0]<90 and y[1]<90 and y[2]<90):
                 blackpixel += 1
                 if(count == 0):
+                    count += 1
+                    firstPixel = j
                     fi = True
                 la = True
                 flag = 0
-        count += 1
-
-    if(gameover == True):
+        
+        
+    if(gameover):
+        print(blackpixel)
         return abs(blackpixel-67)<17
 
     if(flag == 1):
-        return False
+        return 0
                 
+    #print(box, sh[0], la, fi, firstPixel, gameover, flag, count)
     if(sh[0] == 25):
         
         if(la == True):
+            if(firstPixel != -1):
+                print(firstPixel, " abababababa <--==--")
+                return (1, firstPixel)
             return 1
 
         if(fi == True):
             return 2
             
         return 0
-                 
-    return (flag == 0)
-
+    return 1
+        
+ 
 def gameEnded():
+    #print(Coordinates.g)
     return imageGrabRect(Coordinates.g, True)
 
 def saveScreenShot():
