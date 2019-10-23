@@ -39,12 +39,8 @@ def main():
     
             if(controls.gameEnded()):
                 break
-                
-            #print(a-b)
-            #a = time.time()
+            
             res = controls.imageGrab(start, coef1, coef2)
-            #b = time.time()
-            #print(b-a)
 
             if(type(res) is tuple):
                 res, firstPixel = res
@@ -65,5 +61,5 @@ def main():
         controls.restartGame()
         start = time.clock()
 
-            
-main()
+if __name__ == "__main__":
+    main()

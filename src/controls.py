@@ -48,8 +48,7 @@ def imageGrabRect(box, gameover = False):
     cactus = None
     blackpixel = 0
     firstPixel = -1
-    #if(gameover == False):
-    #    print(box, arr.shape, " <==== ")
+    
     for i,x in enumerate(arr):
         cactus = None
         for j, y in enumerate(x):
@@ -70,7 +69,6 @@ def imageGrabRect(box, gameover = False):
     if(flag == 1):
         return 0
                 
-    #print(box, sh[0], la, fi, firstPixel, gameover, flag, count)
     if(sh[0] == 30):
         
         if(cactus):
@@ -87,7 +85,6 @@ def imageGrabRect(box, gameover = False):
         
  
 def gameEnded():
-    #print(Coordinates.g)
     return imageGrabRect(Coordinates.g, True)
 
 def saveScreenShot():
