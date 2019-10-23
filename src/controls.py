@@ -57,14 +57,13 @@ def imageGrabRect(box, gameover = False):
                 blackpixel += 1
                 if(count == 0):
                     count += 1
-                    firstPixel = j
+                    firstPixel = j + Coordinates.c1
                     fi = True
                 la = True
                 flag = 0
         
         
     if(gameover):
-        print(blackpixel)
         return abs(blackpixel-67)<17
 
     if(flag == 1):

@@ -18,7 +18,9 @@ def main():
         controls.restartGame()
 
         if(len(moves)>1):
-            database.insert(moves[:-1])
+            a,b,c = moves[-1]
+            moves[-1] = (a,b,0)
+            database.insert(moves)
 
         while(True):
             timelen = time.clock() - start
@@ -40,7 +42,7 @@ def main():
                 res, firstPixel = res
 
                 end = time.clock()
-                moves.append((round(end - start, 2), firstPixel))
+                moves.append((round(end - start, 2), firstPixel,1))
 
             if(res == 1):
                 controls.press('space', ind)
