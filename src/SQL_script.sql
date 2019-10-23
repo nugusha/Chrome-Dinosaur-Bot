@@ -20,4 +20,6 @@ CREATE TABLE `results` (
 SELECT * from data;
 SELECT * from results;
 
+SELECT id,result FROM results order by result DESC;
+
 INSERT INTO data(speed, length,label) VALUES (22.04,33,1);

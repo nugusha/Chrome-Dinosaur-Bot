@@ -73,7 +73,7 @@ def imageGrabRect(box, gameover = False):
         
         if(cactus):
             if(firstPixel != -1):
-                print(firstPixel, " abababababa <--==--")
+                print(f" Jump at {firstPixel} <--==--")
                 return (1, firstPixel)
             return 1
 

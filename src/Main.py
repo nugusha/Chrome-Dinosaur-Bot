@@ -12,23 +12,17 @@ def main():
     while(True):
         
         moves = []
-        coef1 = random.uniform(0.0, 5.0) # 1.75
-        coef2 = random.randint(50, 175)
+        coef1 = random.uniform(0.5, 2.0) # 1.75
+        coef2 = random.randint(40, 120)
+
+        while(30.0*coef1 + coef1 > 150):
+            coef1 = random.uniform(0.5, 2.0) # 1.75
+            coef2 = random.randint(40, 120)
         
         global start
         start = time.clock()
         end = None
         controls.restartGame()
-
-        if(len(moves)>0):
-            if(len(moves)>1):
-                a,b,c = moves[-2]
-                moves[-2] = (a,b,2)
-            a,b,c = moves[-1]
-            moves[-1] = (a,b,0)
-            database.insert(moves)
-
-        
         
         while(True):
             timelen = time.clock() - start
@@ -53,6 +47,16 @@ def main():
             elif(res == 2):
                 controls.press('down', ind)
             
+
+        if(len(moves)>0):
+            if(len(moves)>1):
+                a,b,c = moves[-2]
+                moves[-2] = (a,b,2)
+            a,b,c = moves[-1]
+            moves[-1] = (a,b,0)
+            database.insert(moves)
+            print("Add in Database!!!")
+
         end = time.clock()
         database.insertResult(coef1,coef2,end-start)
         print(end - start, ind)

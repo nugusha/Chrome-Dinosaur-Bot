@@ -7,8 +7,8 @@ colors = itertools.cycle(["r", "b", "g"])
 db = Database()
 records = db.select()
 
-recIter = len(records) - len(records)//20
-records = records[recIter:]
+#recIter = len(records) - len(records)//4
+#records = records[recIter:]
 
 recTrue = []
 recFalse = []
