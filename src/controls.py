@@ -30,8 +30,8 @@ def imageGrab(start, coef1, coef2):
     cc2 = Coordinates.c2
     XX = (time.clock() - start)
     cc3 = coef1*XX + coef2 # Coordinates.c3[ind]
-    if(XX>60.0):
-        cc3 += 0.002*(XX-60)**(2.5)
+    #if(XX>60.0):
+    #    cc3 += 0.002*(XX-60)**(2.5)
     cc4 = Coordinates.c4
     box = (X+cc1, Y+cc2, X+cc3, Y+cc4)
     return imageGrabRect(box)

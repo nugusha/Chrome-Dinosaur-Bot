@@ -2,34 +2,34 @@ import pyautogui
 import time
 import controls
 import Coordinates
+import random
 from db import Database
 start = 0.0
 
 def main():
     database = Database()
     
-    
-    moves = []
-    coef1 = 0
-    coef2 = 0
-
     while(True):
+        
+        moves = []
+        coef1 = random.uniform(0.0, 5.0) # 1.75
+        coef2 = random.randint(50, 175)
+        
         global start
         start = time.clock()
         end = None
         controls.restartGame()
 
-        if(len(moves)>1):
-            if(len(moves)>2):
+        if(len(moves)>0):
+            if(len(moves)>1):
                 a,b,c = moves[-2]
                 moves[-2] = (a,b,2)
             a,b,c = moves[-1]
             moves[-1] = (a,b,0)
             database.insert(moves)
 
-        coef1 = 1.75
-        coef2 = 90
-
+        
+        
         while(True):
             timelen = time.clock() - start
             for i,t in enumerate(Coordinates.times.timepassed):
