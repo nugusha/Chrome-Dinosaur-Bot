@@ -8,7 +8,7 @@ class Coordinates():
     flyingdino = addtoCoordinate(d, 60, -12, 100, -9)
     g = addtoCoordinate(d, 73, -55, 86, -43)
     c1 = 35
-    c2 = 0
+    c2 = -5
     #c3 = [100, 120, 120, 130, 130, 170, 210, 350]
     c4 = 25
     

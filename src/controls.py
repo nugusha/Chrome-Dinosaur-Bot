@@ -23,13 +23,13 @@ def press(st,ind):
             continue
     pyautogui.keyUp(st)
     
-def imageGrab(start = 0.0):
+def imageGrab(start, coef1, coef2):
     X = Coordinates.dinosaur[0]
     Y = Coordinates.dinosaur[1]
     cc1 = Coordinates.c1
     cc2 = Coordinates.c2
     XX = (time.clock() - start)
-    cc3 = 1.1*XX + 110 # Coordinates.c3[ind]
+    cc3 = coef1*XX + coef2 # Coordinates.c3[ind]
     if(XX>60.0):
         cc3 += 0.002*(XX-60)**(2.5)
     cc4 = Coordinates.c4
@@ -44,24 +44,25 @@ def imageGrabRect(box, gameover = False):
 
     flag = 1
     count = 0
-    fi = None
-    la = None
+    flyDino = None
+    cactus = None
     blackpixel = 0
     firstPixel = -1
     #if(gameover == False):
     #    print(box, arr.shape, " <==== ")
-    for x in arr:
-        la = None
+    for i,x in enumerate(arr):
+        cactus = None
         for j, y in enumerate(x):
             if(y[0]<90 and y[1]<90 and y[2]<90):
                 blackpixel += 1
                 if(count == 0):
                     count += 1
                     firstPixel = j + Coordinates.c1
-                    fi = True
-                la = True
+                    
+                if(i==0):
+                    flyDino = True
+                cactus = True
                 flag = 0
-        
         
     if(gameover):
         return abs(blackpixel-67)<17
@@ -70,15 +71,15 @@ def imageGrabRect(box, gameover = False):
         return 0
                 
     #print(box, sh[0], la, fi, firstPixel, gameover, flag, count)
-    if(sh[0] == 25):
+    if(sh[0] == 30):
         
-        if(la == True):
+        if(cactus):
             if(firstPixel != -1):
                 print(firstPixel, " abababababa <--==--")
                 return (1, firstPixel)
             return 1
 
-        if(fi == True):
+        if(flyDino):
             return 2
             
         return 0

@@ -10,6 +10,8 @@ def main():
     
     
     moves = []
+    coef1 = 0
+    coef2 = 0
 
     while(True):
         global start
@@ -18,9 +20,15 @@ def main():
         controls.restartGame()
 
         if(len(moves)>1):
+            if(len(moves)>2):
+                a,b,c = moves[-2]
+                moves[-2] = (a,b,2)
             a,b,c = moves[-1]
             moves[-1] = (a,b,0)
             database.insert(moves)
+
+        coef1 = 1.75
+        coef2 = 90
 
         while(True):
             timelen = time.clock() - start
@@ -34,7 +42,7 @@ def main():
                 
             #print(a-b)
             #a = time.time()
-            res = controls.imageGrab(start)
+            res = controls.imageGrab(start, coef1, coef2)
             #b = time.time()
             #print(b-a)
 
@@ -48,13 +56,14 @@ def main():
                 controls.press('space', ind)
             elif(res == 2):
                 controls.press('down', ind)
-        pyautogui.click((1000, 500))
             
         end = time.clock()
+        database.insertResult(coef1,coef2,end-start)
         print(end - start, ind)
         time.sleep(3.0)
         controls.saveScreenShot()
         controls.restartGame()
         start = time.clock()
+
             
 main()
